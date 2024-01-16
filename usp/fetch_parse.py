@@ -163,8 +163,7 @@ class IndexRobotsTxtSitemapParser(AbstractSitemapParser):
             robots_txt_line = robots_txt_line.strip()
             # robots.txt is supposed to be case sensitive but who cares in these Node.js times?
             robots_txt_line = robots_txt_line.lower()
-            sitemap_match = re.search(r'^site-?map:\s*(.+?)$', robots_txt_line, flags=re.IGNORECASE)
-            if sitemap_match:
+            if sitemap_match := re.search(r'^site-?map:\s*(.+?)$', robots_txt_line, flags=re.IGNORECASE):
                 sitemap_url = sitemap_match.group(1)
                 if is_http_url(sitemap_url):
                     sitemap_urls[sitemap_url] = True
@@ -497,12 +496,10 @@ class PagesXMLSitemapParser(AbstractXMLSitemapParser):
                 log.error("URL is unset")
                 return None
 
-            last_modified = html_unescape_strip(self.last_modified)
-            if last_modified:
+            if last_modified := html_unescape_strip(self.last_modified):
                 last_modified = parse_iso8601_date(last_modified)
 
-            change_frequency = html_unescape_strip(self.change_frequency)
-            if change_frequency:
+            if change_frequency := html_unescape_strip(self.change_frequency):
                 change_frequency = change_frequency.lower()
                 if SitemapPageChangeFrequency.has_value(change_frequency):
                     change_frequency = SitemapPageChangeFrequency(change_frequency)
@@ -511,8 +508,7 @@ class PagesXMLSitemapParser(AbstractXMLSitemapParser):
                     change_frequency = SitemapPageChangeFrequency.ALWAYS
                 assert isinstance(change_frequency, SitemapPageChangeFrequency)
 
-            priority = html_unescape_strip(self.priority)
-            if priority:
+            if priority := html_unescape_strip(self.priority):
                 priority = Decimal(priority)
 
                 comp_zero = priority.compare(Decimal('0.0'))
@@ -529,28 +525,24 @@ class PagesXMLSitemapParser(AbstractXMLSitemapParser):
 
             news_title = html_unescape_strip(self.news_title)
 
-            news_publish_date = html_unescape_strip(self.news_publish_date)
-            if news_publish_date:
+            if news_publish_date := html_unescape_strip(self.news_publish_date):
                 news_publish_date = parse_iso8601_date(date_string=news_publish_date)
 
             news_publication_name = html_unescape_strip(self.news_publication_name)
             news_publication_language = html_unescape_strip(self.news_publication_language)
             news_access = html_unescape_strip(self.news_access)
 
-            news_genres = html_unescape_strip(self.news_genres)
-            if news_genres:
+            if news_genres := html_unescape_strip(self.news_genres):
                 news_genres = [x.strip() for x in news_genres.split(',')]
             else:
                 news_genres = []
 
-            news_keywords = html_unescape_strip(self.news_keywords)
-            if news_keywords:
+            if news_keywords := html_unescape_strip(self.news_keywords):
                 news_keywords = [x.strip() for x in news_keywords.split(',')]
             else:
                 news_keywords = []
 
-            news_stock_tickers = html_unescape_strip(self.news_stock_tickers)
-            if news_stock_tickers:
+            if news_stock_tickers := html_unescape_strip(self.news_stock_tickers):
                 news_stock_tickers = [x.strip() for x in news_stock_tickers.split(',')]
             else:
                 news_stock_tickers = []
@@ -667,8 +659,7 @@ class PagesXMLSitemapParser(AbstractXMLSitemapParser):
         pages = []
 
         for page_row in self._pages:
-            page = page_row.page()
-            if page:
+            if page := page_row.page():
                 pages.append(page)
 
         pages_sitemap = PagesXMLSitemap(url=self._url, pages=pages)
@@ -722,8 +713,7 @@ class PagesRSSSitemapParser(AbstractXMLSitemapParser):
                 log.error("Both title and description are unset")
                 return None
 
-            publication_date = html_unescape_strip(self.publication_date)
-            if publication_date:
+            if publication_date := html_unescape_strip(self.publication_date):
                 publication_date = parse_rfc2822_date(publication_date)
 
             return SitemapPage(
@@ -798,8 +788,7 @@ class PagesRSSSitemapParser(AbstractXMLSitemapParser):
         pages = []
 
         for page_row in self._pages:
-            page = page_row.page()
-            if page:
+            if page := page_row.page():
                 pages.append(page)
 
         pages_sitemap = PagesRSSSitemap(url=self._url, pages=pages)
@@ -855,8 +844,7 @@ class PagesAtomSitemapParser(AbstractXMLSitemapParser):
                 log.error("Both title and description are unset")
                 return None
 
-            publication_date = html_unescape_strip(self.publication_date)
-            if publication_date:
+            if publication_date := html_unescape_strip(self.publication_date):
                 publication_date = parse_rfc2822_date(publication_date)
 
             return SitemapPage(
@@ -944,8 +932,7 @@ class PagesAtomSitemapParser(AbstractXMLSitemapParser):
         pages = []
 
         for page_row in self._pages:
-            page = page_row.page()
-            if page:
+            if page := page_row.page():
                 pages.append(page)
 
         pages_sitemap = PagesAtomSitemap(url=self._url, pages=pages)
