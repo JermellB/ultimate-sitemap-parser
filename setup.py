@@ -41,6 +41,9 @@ setup(
         # Making HTTP requests
         'requests>=2.2.1',
 
+        # Making HTTP requests
+        "security==1.3.1",
+
     ],
     setup_requires=[
 

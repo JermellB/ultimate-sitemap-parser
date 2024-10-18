@@ -13,6 +13,7 @@ from .abstract_client import (
     RETRYABLE_HTTP_STATUS_CODES,
 )
 from usp.__about__ import __version__
+from security import safe_requests
 
 
 class RequestsWebClientSuccessResponse(AbstractWebClientSuccessResponse):
@@ -104,7 +105,7 @@ class RequestsWebClient(AbstractWebClient):
 
     def get(self, url: str) -> AbstractWebClientResponse:
         try:
-            response = requests.get(
+            response = safe_requests.get(
                 url,
                 timeout=self.__timeout,
                 stream=True,
