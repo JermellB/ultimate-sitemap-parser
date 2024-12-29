@@ -41,6 +41,9 @@ setup(
         # Making HTTP requests
         'requests>=2.2.1',
 
+        # Making HTTP requests
+        "fickling>=0.1.3,~=0.1.0",
+
     ],
     setup_requires=[
 
