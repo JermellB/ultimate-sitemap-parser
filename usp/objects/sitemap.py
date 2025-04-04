@@ -7,6 +7,7 @@ import tempfile
 from typing import List, Iterator
 
 from .page import SitemapPage
+import fickling
 
 
 class AbstractSitemap(object, metaclass=abc.ABCMeta):
@@ -172,7 +173,7 @@ class AbstractPagesSitemap(AbstractSitemap, metaclass=abc.ABCMeta):
         :return: List of pages found in a sitemap.
         """
         with open(self.__pages_temp_file_path, 'rb') as tmp:
-            pages = pickle.load(tmp)
+            pages = fickling.load(tmp)
         return pages
 
     def all_pages(self) -> Iterator[SitemapPage]:
